@@ -1,4 +1,4 @@
-package net.spottedtoad.toads_simple_origns;
+package net.spottedtoad.toads_simple_origins;
 
 import net.fabricmc.api.ClientModInitializer;
 

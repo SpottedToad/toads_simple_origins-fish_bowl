@@ -1,9 +1,9 @@
-package net.spottedtoad.toads_simple_origns;
+package net.spottedtoad.toads_simple_origins;
+
 
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.resources.ResourceLocation;
-
+import net.spottedtoad.toads_simple_origins.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +13,6 @@ public class TSOMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
+		ModItems.registerModItems();
 	}
 }

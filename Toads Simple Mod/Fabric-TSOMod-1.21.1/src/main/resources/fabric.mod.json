@@ -9,17 +9,17 @@
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/SpottedToad/Toads-Simple-Origins"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/toads_simple_origins/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.spottedtoad.toads_simple_origns.TSOMod"
+			"net.spottedtoad.toads_simple_origins.TSOMod"
 		],
 		"fabric-datagen": [
-			"net.spottedtoad.toads_simple_origns.TSOModDataGenerator"
+			"net.spottedtoad.toads_simple_origins.TSOModDataGenerator"
 		],
 		"client": [
 			"net.spottedtoad.toads_simple_origins.TSOModClient"
