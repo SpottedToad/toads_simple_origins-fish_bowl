@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "loading_priority":99,
+  "origins": [
+    "toads_simple_origins:template"
+  ]
+}

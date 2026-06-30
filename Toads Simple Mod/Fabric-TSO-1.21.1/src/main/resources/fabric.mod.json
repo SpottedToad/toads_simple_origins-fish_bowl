@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "toads_simple_origins",
+	"version": "${version}",
+	"name": "toads_simple_origins",
+	"description": "A mod that adds features for Toad's Simple Origins server.",
+	"authors": [
+		"SpottedToad"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/toads_simple_origins/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.spottedtoad.toads_simple_origns.TSOMod"
+		],
+		"fabric-datagen": [
+			"net.spottedtoad.toads_simple_origns.TSOModDataGenerator"
+		],
+		"client": [
+			"net.spottedtoad.toads_simple_origins.TSOModClient"
+		]
+	},
+	"mixins": [
+		"toads_simple_origins.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
