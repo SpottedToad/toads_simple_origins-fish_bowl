@@ -15,18 +15,16 @@ import static net.minecraft.item.Items.LEATHER_HORSE_ARMOR;
 public class ModItems {
 
     public static final Item MISERABLE_CREATURE = registerItem("miserable_creature",
-            new Item(new Item.Settings()));
+            new Item(new Item.Settings().food(ModFoodComponents.MISERABLE_CREATURE)));
     public static final Item COOKED_MISERABLE_CREATURE = registerItem("cooked_miserable_creature",
-            new Item(new Item.Settings()));
+            new Item(new Item.Settings().food(ModFoodComponents.COOKED_MISERABLE_CREATURE)));
 
     public static final Item FISH_BOWL = registerItem("fish_bowl",
             new ArmorItem(ModArmorMaterials.GLASS_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Settings()
                     .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(12))));
-
     public static final Item REINFORCED_FISH_BOWL = registerItem("reinforced_fish_bowl",
             new ArmorItem(ModArmorMaterials.GLASS_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Settings()
                     .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(20))));
-
 
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, Identifier.of(TSOMod.MOD_ID, name), item);
