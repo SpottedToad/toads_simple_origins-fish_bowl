@@ -4,7 +4,7 @@ import mod.azure.azurelib.common.model.AzBakedModel;
 import mod.azure.azurelib.common.model.AzBone;
 import mod.azure.azurelib.common.render.armor.bone.AzDefaultArmorBoneProvider;
 
-public class FishBowlBoneProvider extends AzDefaultArmorBoneProvider {
+public class EmptyFishBowlBoneProvider extends AzDefaultArmorBoneProvider {
     @Override
     public AzBone getHeadBone(AzBakedModel model){
         return model.getBone("armorHead").orElse(null);

@@ -5,20 +5,20 @@ import mod.azure.azurelib.common.render.armor.AzArmorRendererConfig;
 import net.minecraft.util.Identifier;
 import net.spottedtoad.toads_simple_origins.TSOMod;
 
-public class FishBowlRenderer extends AzArmorRenderer {
+public class EmptyFishBowlRenderer extends AzArmorRenderer {
     private static final Identifier MODEL = Identifier.of(
             TSOMod.MOD_ID,
-            "geo/fish_bowl.geo.json"
+            "geo/empty_fish_bowl.geo.json"
     );
 
     private static final Identifier TEXTURE = Identifier.of(
             TSOMod.MOD_ID,
-            "textures/armor/fish_bowl.png"
+            "textures/armor/empty_fish_bowl.png"
     );
 
-    public FishBowlRenderer() {
+    public EmptyFishBowlRenderer() {
         super(AzArmorRendererConfig.builder(MODEL, TEXTURE)
-                .setBoneProvider(new FishBowlBoneProvider())
+                .setBoneProvider(new EmptyFishBowlBoneProvider())
                 .build()
         );
     }

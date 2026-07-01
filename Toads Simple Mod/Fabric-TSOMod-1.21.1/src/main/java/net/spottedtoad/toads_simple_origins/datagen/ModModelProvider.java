@@ -20,7 +20,7 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
 
-        itemModelGenerator.registerArmor(((ArmorItem) ModItems.FISH_BOWL));
+        itemModelGenerator.registerArmor(((ArmorItem) ModItems.EMPTY_FISH_BOWL));
         itemModelGenerator.registerArmor(((ArmorItem) ModItems.REINFORCED_FISH_BOWL));
 
     }
