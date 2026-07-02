@@ -22,7 +22,7 @@ public class ModBlocks {
 
     private static Block registerBlockWithoutBlockItem(String name, Function<AbstractBlock.Settings, Block> function) {
         return Registry.register(Registries.BLOCK, Identifier.of(TSOMod.MOD_ID, name),
-                function.apply(AbstractBlock.Settings.create()));
+                function.apply(AbstractBlock.Settings.create().nonOpaque()));
     }
 
     public static void registerModBlocks() {

@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.item.ArmorItem;
+import net.spottedtoad.toads_simple_origins.block.ModBlocks;
 import net.spottedtoad.toads_simple_origins.item.ModItems;
 
 public class ModModelProvider extends FabricModelProvider {
@@ -14,12 +15,11 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.FISH_BOWL_BLOCK);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-
         itemModelGenerator.registerArmor(((ArmorItem) ModItems.EMPTY_FISH_BOWL));
         itemModelGenerator.registerArmor(((ArmorItem) ModItems.REINFORCED_FISH_BOWL));
 
