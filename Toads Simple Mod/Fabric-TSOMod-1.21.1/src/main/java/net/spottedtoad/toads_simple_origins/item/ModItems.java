@@ -9,6 +9,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.spottedtoad.toads_simple_origins.item.custom.EmptyFishBowlArmorItem;
+import net.spottedtoad.toads_simple_origins.item.custom.FilledFishBowlArmorItem;
 
 import static net.minecraft.item.Items.DRIED_KELP;
 import static net.minecraft.item.Items.LEATHER_HORSE_ARMOR;
@@ -23,8 +24,8 @@ public class ModItems {
     public static final Item EMPTY_FISH_BOWL = registerItem("empty_fish_bowl",
             new EmptyFishBowlArmorItem(ModArmorMaterials.GLASS_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Settings()
                     .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(12))));
-    public static final Item REINFORCED_FISH_BOWL = registerItem("reinforced_fish_bowl",
-            new ArmorItem(ModArmorMaterials.GLASS_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Settings()
+    public static final Item FILLED_FISH_BOWL = registerItem("filled_fish_bowl",
+            new FilledFishBowlArmorItem(ModArmorMaterials.GLASS_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Settings()
                     .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(20))));
 
     private static Item registerItem(String name, Item item){
@@ -39,7 +40,7 @@ public class ModItems {
             });
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
                 entries.addBefore(LEATHER_HORSE_ARMOR, EMPTY_FISH_BOWL);
-                entries.addAfter(EMPTY_FISH_BOWL, REINFORCED_FISH_BOWL);
+                entries.addAfter(EMPTY_FISH_BOWL, FILLED_FISH_BOWL);
             });
     }
 }

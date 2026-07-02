@@ -8,8 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class FishBowlBlock extends Block {
-    public FishBowlBlock(Settings settings) {
+public class EmptyFishBowlBlock extends Block {
+    public EmptyFishBowlBlock(Settings settings) {
         super(settings);
     }
     private static final VoxelShape SHAPE =

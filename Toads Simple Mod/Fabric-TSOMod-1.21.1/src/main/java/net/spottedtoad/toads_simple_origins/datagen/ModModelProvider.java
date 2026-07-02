@@ -15,13 +15,13 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.FISH_BOWL_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.EMPTY_FISH_BOWL_BLOCK);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.registerArmor(((ArmorItem) ModItems.EMPTY_FISH_BOWL));
-        itemModelGenerator.registerArmor(((ArmorItem) ModItems.REINFORCED_FISH_BOWL));
+        itemModelGenerator.registerArmor(((ArmorItem) ModItems.FILLED_FISH_BOWL));
 
     }
 }

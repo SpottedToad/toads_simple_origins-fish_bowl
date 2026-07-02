@@ -8,14 +8,19 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.spottedtoad.toads_simple_origins.TSOMod;
-import net.spottedtoad.toads_simple_origins.block.custom.FishBowlBlock;
+import net.spottedtoad.toads_simple_origins.block.custom.EmptyFishBowlBlock;
+import net.spottedtoad.toads_simple_origins.block.custom.FilledFishBowlBlock;
 
 import java.util.function.Function;
 
 public class ModBlocks {
 
-    public static final Block FISH_BOWL_BLOCK = registerBlockWithoutBlockItem("fish_bowl_block",
-            properties -> new FishBowlBlock(properties.noCollision()
+    public static final Block EMPTY_FISH_BOWL_BLOCK = registerBlockWithoutBlockItem("empty_fish_bowl_block",
+            properties -> new EmptyFishBowlBlock(properties.noCollision()
+                    .ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GLASS)
+                    .pistonBehavior(PistonBehavior.NORMAL)));
+    public static final Block FILLED_FISH_BOWL_BLOCK = registerBlockWithoutBlockItem("filled_fish_bowl_block",
+            properties -> new FilledFishBowlBlock(properties.noCollision()
                     .ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GLASS)
                     .pistonBehavior(PistonBehavior.NORMAL)));
 

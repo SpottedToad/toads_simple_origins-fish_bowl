@@ -16,8 +16,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.spottedtoad.toads_simple_origins.block.ModBlocks;
 
-public class EmptyFishBowlArmorItem extends ArmorItem {
-    public EmptyFishBowlArmorItem(RegistryEntry<ArmorMaterial> material, Type type, Settings settings) {
+public class FilledFishBowlArmorItem extends ArmorItem {
+    public FilledFishBowlArmorItem(RegistryEntry<ArmorMaterial> material, Type type, Settings settings) {
         super(material, type, settings);
     }
 
@@ -31,7 +31,7 @@ public class EmptyFishBowlArmorItem extends ArmorItem {
                 Direction side = hitResult.getSide();
                 BlockPos placePos = targetPos.offset(side);
                 if (!world.isClient()) {
-                 BlockState blockToPlace = ModBlocks.EMPTY_FISH_BOWL_BLOCK.getDefaultState();
+                 BlockState blockToPlace = ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState();
                     if (world.getBlockState(placePos).canReplace(new ItemPlacementContext(user, hand, itemStack, hitResult))) {
                         world.setBlockState(placePos, blockToPlace);
                         if (!user.getAbilities().creativeMode) {

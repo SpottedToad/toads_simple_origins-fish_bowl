@@ -13,6 +13,9 @@ public class TSOModClient implements ClientModInitializer {
     public void onInitializeClient() {
         AzArmorRendererRegistry.register(EmptyFishBowlRenderer::new,
                 ModItems.EMPTY_FISH_BOWL);
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.FISH_BOWL_BLOCK, RenderLayer.getTranslucent());
+        AzArmorRendererRegistry.register(EmptyFishBowlRenderer::new,
+                ModItems.FILLED_FISH_BOWL);
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.EMPTY_FISH_BOWL_BLOCK, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.FILLED_FISH_BOWL_BLOCK, RenderLayer.getTranslucent());
     }
 }
