@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "waterlogged=false": {
       "model": "toads_simple_origins:block/filled_fish_bowl_block"
+    },
+    "waterlogged=true": {
+      "model": "toads_simple_origins:block/empty_fish_bowl_block"
     }
   }
 }

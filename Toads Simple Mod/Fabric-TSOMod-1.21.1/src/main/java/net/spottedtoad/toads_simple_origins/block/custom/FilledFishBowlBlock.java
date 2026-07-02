@@ -1,9 +1,6 @@
 package net.spottedtoad.toads_simple_origins.block.custom;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -15,9 +12,11 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 
-public class FilledFishBowlBlock extends Block {
+public class FilledFishBowlBlock extends Block implements Waterloggable {
     public FilledFishBowlBlock(Settings settings) {
         super(settings);
+        //Set default state to not be waterlogged
+        this.setDefaultState(this.stateManager.getDefaultState().with(Properties.WATERLOGGED, false));
     }
 
 
@@ -45,14 +44,21 @@ public class FilledFishBowlBlock extends Block {
     }
 
 
-    //Waterlog when placed in water
+    //Create waterlogged state
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(Properties.WATERLOGGED);
+    }
+
+    //Set state to waterlogged when placed in water
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-        return this.getDefaultState().with(Properties.WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+        boolean isWater = fluidState.getFluid() == Fluids.WATER;
+        return this.getDefaultState().with(Properties.WATERLOGGED, isWater);
     }
 
-    //Waterlog when water appears around the block
+    //Set state to waterlogged when water appears around the block
     @Override
     protected BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(Properties.WATERLOGGED)) {
@@ -61,15 +67,12 @@ public class FilledFishBowlBlock extends Block {
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
-    //Render water in waterlogged state
+    //Fill with water in waterlogged state
     @Override
     protected FluidState getFluidState(BlockState state) {
-        return state.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
-    }
-
-    //Register waterlogged property to block config
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(Properties.WATERLOGGED);
+        if (state.contains(Properties.WATERLOGGED) && state.get(Properties.WATERLOGGED)) {
+            return Fluids.WATER.getStill(false);
+        }
+        return super.getFluidState(state);
     }
 }
