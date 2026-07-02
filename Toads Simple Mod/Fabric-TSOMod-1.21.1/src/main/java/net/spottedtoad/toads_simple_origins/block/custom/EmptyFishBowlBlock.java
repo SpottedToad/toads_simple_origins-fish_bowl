@@ -21,7 +21,6 @@ public class EmptyFishBowlBlock extends Block implements Waterloggable {
         this.setDefaultState(this.stateManager.getDefaultState().with(Properties.WATERLOGGED, false));
     }
 
-
     //Define hitbox shape value
     private static final VoxelShape SHAPE =
             Block.createCuboidShape(3.2, 0, 3.2, 12.8, 9.6, 12.8);
