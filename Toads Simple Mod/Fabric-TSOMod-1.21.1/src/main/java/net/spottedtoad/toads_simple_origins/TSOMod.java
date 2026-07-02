@@ -14,7 +14,11 @@ public class TSOMod implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+
+		//Register mod items on initialize
 		ModItems.registerModItems();
+
+		//Register mod blocks on initialize
 		ModBlocks.registerModBlocks();
 	}
 }

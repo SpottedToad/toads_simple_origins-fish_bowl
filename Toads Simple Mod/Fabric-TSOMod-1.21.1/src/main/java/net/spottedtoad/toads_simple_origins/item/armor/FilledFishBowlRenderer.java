@@ -10,16 +10,19 @@ import static java.awt.Transparency.TRANSLUCENT;
 
 public class FilledFishBowlRenderer extends AzArmorRenderer {
 
+    //Define armor shape
     private static final Identifier MODEL = Identifier.of(
             TSOMod.MOD_ID,
             "geo/filled_fish_bowl.geo.json"
     );
 
+    //Define armor texture
     private static final Identifier TEXTURE = Identifier.of(
             TSOMod.MOD_ID,
             "textures/armor/filled_fish_bowl.png"
     );
 
+    //Attach armor shape, texture, bones, and transparent type to renderer
     public FilledFishBowlRenderer() {
         super(AzArmorRendererConfig.builder(MODEL, TEXTURE)
                 .setBoneProvider(new FilledFishBowlBoneProvider())

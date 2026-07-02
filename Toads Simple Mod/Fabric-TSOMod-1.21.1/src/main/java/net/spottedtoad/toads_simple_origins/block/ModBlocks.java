@@ -15,6 +15,7 @@ import java.util.function.Function;
 
 public class ModBlocks {
 
+    //Register block qualities
     public static final Block EMPTY_FISH_BOWL_BLOCK = registerBlockWithoutBlockItem("empty_fish_bowl_block",
             properties -> new EmptyFishBowlBlock(properties.noCollision()
                     .ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GLASS)
@@ -24,12 +25,13 @@ public class ModBlocks {
                     .ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GLASS)
                     .pistonBehavior(PistonBehavior.NORMAL)));
 
-
+    //Register blocks while preventing the creation of a block item
     private static Block registerBlockWithoutBlockItem(String name, Function<AbstractBlock.Settings, Block> function) {
         return Registry.register(Registries.BLOCK, Identifier.of(TSOMod.MOD_ID, name),
                 function.apply(AbstractBlock.Settings.create().nonOpaque()));
     }
 
+    //Log registries
     public static void registerModBlocks() {
         TSOMod.LOGGER.info("Registering Mod Blocks for " + TSOMod.MOD_ID);
     }

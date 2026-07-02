@@ -5,6 +5,8 @@ import mod.azure.azurelib.common.model.AzBone;
 import mod.azure.azurelib.common.render.armor.bone.AzDefaultArmorBoneProvider;
 
 public class FilledFishBowlBoneProvider extends AzDefaultArmorBoneProvider {
+
+    //Provide head bone
     @Override
     public AzBone getHeadBone(AzBakedModel model){
         return model.getBone("armorHead").orElse(null);

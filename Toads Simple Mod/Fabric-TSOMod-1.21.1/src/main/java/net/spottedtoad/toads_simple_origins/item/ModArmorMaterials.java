@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class ModArmorMaterials {
+
+    //Define values for glass armor material
     public static final RegistryEntry<ArmorMaterial> GLASS_ARMOR_MATERIAL = registerArmorMaterial("glass",
             () -> new ArmorMaterial(Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 1);
@@ -27,6 +29,7 @@ public class ModArmorMaterials {
             }), 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, () -> Ingredient.ofItems(Items.GLASS),
                     List.of(new ArmorMaterial.Layer(Identifier.of(TSOMod.MOD_ID, "glass"))), 0, 0));
 
+    //Define values for unused reinforced glass armor material
     public static final RegistryEntry<ArmorMaterial> REINFORCED_GLASS_ARMOR_MATERIAL = registerArmorMaterial("reinforced_glass",
             () -> new ArmorMaterial(Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 3);
@@ -38,7 +41,7 @@ public class ModArmorMaterials {
                     List.of(new ArmorMaterial.Layer(Identifier.of(TSOMod.MOD_ID, "reinforced_glass"))), 0, 0));
 
 
-
+    //Register armor materials
     public static RegistryEntry<ArmorMaterial> registerArmorMaterial(String name, Supplier<ArmorMaterial> material){
         return Registry.registerReference(Registries.ARMOR_MATERIAL, Identifier.of(TSOMod.MOD_ID, name), material.get());
     }

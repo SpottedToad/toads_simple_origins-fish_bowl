@@ -21,27 +21,36 @@ public class FilledFishBowlArmorItem extends ArmorItem {
         super(material, type, settings);
     }
 
+
+    //Define action on item use
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
+        //Define action when sneaking as block raycast
         if (user.isSneaking()) {
             BlockHitResult hitResult = (BlockHitResult) user.raycast(5.0D, 0.0F, false);
+            //Define action when hitting a block with raycast as defining targeted block position
             if (hitResult.getType() == HitResult.Type.BLOCK) {
                 BlockPos targetPos = hitResult.getBlockPos();
                 Direction side = hitResult.getSide();
                 BlockPos placePos = targetPos.offset(side);
+                //Define action on server as placing filled fish bowl block
                 if (!world.isClient()) {
                  BlockState blockToPlace = ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState();
+                    //Perform action on server when position matches conditions to be placeable
                     if (world.getBlockState(placePos).canReplace(new ItemPlacementContext(user, hand, itemStack, hitResult))) {
                         world.setBlockState(placePos, blockToPlace);
+                        //Remove one item if not in creative
                         if (!user.getAbilities().creativeMode) {
                             itemStack.decrement(1);
                         }
                     }
                 }
+                //Swing hand
                 return TypedActionResult.success(itemStack, world.isClient());
             }
         }
+        //Define action when not sneaking as default armor item use
         return super.use(world, user, hand);
     }
 }
