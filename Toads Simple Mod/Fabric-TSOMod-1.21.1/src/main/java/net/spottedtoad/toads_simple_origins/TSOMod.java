@@ -3,6 +3,7 @@ package net.spottedtoad.toads_simple_origins;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.spottedtoad.toads_simple_origins.block.ModBlocks;
 import net.spottedtoad.toads_simple_origins.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,5 +15,6 @@ public class TSOMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.registerModItems();
+		ModBlocks.registerModBlocks();
 	}
 }
