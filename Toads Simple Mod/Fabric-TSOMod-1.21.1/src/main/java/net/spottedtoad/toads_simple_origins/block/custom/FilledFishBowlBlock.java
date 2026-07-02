@@ -50,6 +50,15 @@ public class FilledFishBowlBlock extends Block implements Waterloggable {
         builder.add(Properties.WATERLOGGED);
     }
 
+    //Fill with water in waterlogged state
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        if (state.contains(Properties.WATERLOGGED) && state.get(Properties.WATERLOGGED)) {
+            return Fluids.WATER.getStill(false);
+        }
+        return super.getFluidState(state);
+    }
+
     //Set state to waterlogged when placed in water
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -58,21 +67,12 @@ public class FilledFishBowlBlock extends Block implements Waterloggable {
         return this.getDefaultState().with(Properties.WATERLOGGED, isWater);
     }
 
-    //Set state to waterlogged when water appears around the block
+    //Set state to waterlogged when updates occur around the block
     @Override
     protected BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(Properties.WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
-    }
-
-    //Fill with water in waterlogged state
-    @Override
-    protected FluidState getFluidState(BlockState state) {
-        if (state.contains(Properties.WATERLOGGED) && state.get(Properties.WATERLOGGED)) {
-            return Fluids.WATER.getStill(false);
-        }
-        return super.getFluidState(state);
     }
 }
