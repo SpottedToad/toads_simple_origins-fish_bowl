@@ -2,10 +2,14 @@ package net.spottedtoad.toads_simple_origins.item.armor;
 
 import mod.azure.azurelib.common.render.armor.AzArmorRenderer;
 import mod.azure.azurelib.common.render.armor.AzArmorRendererConfig;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import net.spottedtoad.toads_simple_origins.TSOMod;
 
+import static java.awt.Transparency.TRANSLUCENT;
+
 public class FilledFishBowlRenderer extends AzArmorRenderer {
+
     private static final Identifier MODEL = Identifier.of(
             TSOMod.MOD_ID,
             "geo/filled_fish_bowl.geo.json"
@@ -19,6 +23,7 @@ public class FilledFishBowlRenderer extends AzArmorRenderer {
     public FilledFishBowlRenderer() {
         super(AzArmorRendererConfig.builder(MODEL, TEXTURE)
                 .setBoneProvider(new FilledFishBowlBoneProvider())
+                .setRenderType((entity, itemStack) -> RenderLayer.getEntityTranslucent(TEXTURE))
                 .build()
         );
     }
