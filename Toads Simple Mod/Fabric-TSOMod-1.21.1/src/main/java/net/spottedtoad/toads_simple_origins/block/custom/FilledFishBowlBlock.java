@@ -1,6 +1,8 @@
 package net.spottedtoad.toads_simple_origins.block.custom;
 
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -13,6 +15,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemActionResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -20,13 +23,16 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.spottedtoad.toads_simple_origins.block.ModBlocks;
+import net.spottedtoad.toads_simple_origins.block.entity.EmptyFishBowlBlockEntity;
+import net.spottedtoad.toads_simple_origins.block.entity.FilledFishBowlBlockEntity;
 
-public class FilledFishBowlBlock extends Block implements Waterloggable {
+public class FilledFishBowlBlock extends TranslucentBlock implements Waterloggable, BlockEntityProvider {
     public FilledFishBowlBlock(Settings settings) {
         super(settings);
         //Set default state to not be waterlogged
         this.setDefaultState(this.stateManager.getDefaultState().with(Properties.WATERLOGGED, false));
     }
+
 
     //Define hitbox shape value
     private static final VoxelShape SHAPE =
@@ -45,10 +51,16 @@ public class FilledFishBowlBlock extends Block implements Waterloggable {
     }
 
 
-    //Define block model
+    //Prevent self face culling
+    @Override
+    protected boolean isSideInvisible(BlockState state, BlockState neighborState, Direction direction) {
+        return false;
+    }
+
+    //Prevent vanilla block rendering
     @Override
     protected BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+        return BlockRenderType.INVISIBLE;
     }
 
 
@@ -84,16 +96,17 @@ public class FilledFishBowlBlock extends Block implements Waterloggable {
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
-    // Define action on item use
+
+    //Define action on item use
     @Override
-    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, net.minecraft.util.hit.BlockHitResult hit) {
-        // Define action when held item is a bucket
+    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        //Define action when held item is a bucket
         if (stack.isOf(Items.BUCKET)) {
-            // Define action on server as play sound, swap block with empty fish bowl block, and waterlog if block was waterlogged
+            //Define action on server as play sound, swap block with empty fish bowl block, and waterlog if block was waterlogged
             if (!world.isClient()) {
                 world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 boolean isWaterlogged = state.contains(Properties.WATERLOGGED) && state.get(Properties.WATERLOGGED);
-                // Define action when block is waterlogged as replacing with a not waterlogged filled fish bowl
+                //Define action when block is waterlogged as replacing with a not waterlogged filled fish bowl
                 if (isWaterlogged) {
                     world.setBlockState(pos, ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState()
                             .with(Properties.WATERLOGGED, false), 3);
@@ -103,7 +116,7 @@ public class FilledFishBowlBlock extends Block implements Waterloggable {
                     world.setBlockState(pos, ModBlocks.EMPTY_FISH_BOWL_BLOCK.getDefaultState()
                             .with(Properties.WATERLOGGED, false), 3);
                 }
-                // Remove one item when not in creative, then place water bucket into their hand or dropped onto the ground with full inventory
+                //Remove one item when not in creative, then place water bucket into their hand or dropped onto the ground with full inventory
                 if (!player.getAbilities().creativeMode) {
                     stack.decrement(1);
                     ItemStack waterBucket = new ItemStack(Items.WATER_BUCKET);
@@ -114,10 +127,17 @@ public class FilledFishBowlBlock extends Block implements Waterloggable {
                     }
                 }
             }
-            // Swing hand
+            //Swing hand
             return ItemActionResult.SUCCESS;
         }
-        // Define action when held item is not a bucket as default
+        //Define action when held item is not a bucket as default
         return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+    }
+
+
+    //Implements block entity
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new FilledFishBowlBlockEntity(pos, state);
     }
 }

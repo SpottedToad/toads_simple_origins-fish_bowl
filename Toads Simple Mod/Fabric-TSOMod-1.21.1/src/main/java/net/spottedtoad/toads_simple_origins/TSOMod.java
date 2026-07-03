@@ -4,6 +4,7 @@ package net.spottedtoad.toads_simple_origins;
 import net.fabricmc.api.ModInitializer;
 
 import net.spottedtoad.toads_simple_origins.block.ModBlocks;
+import net.spottedtoad.toads_simple_origins.block.entity.ModBlockEntities;
 import net.spottedtoad.toads_simple_origins.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,5 +21,8 @@ public class TSOMod implements ModInitializer {
 
 		//Register mod blocks on initialize
 		ModBlocks.registerModBlocks();
+
+		//Register mod block entities on initialize
+		ModBlockEntities.registerModBlockEntities();
 	}
 }

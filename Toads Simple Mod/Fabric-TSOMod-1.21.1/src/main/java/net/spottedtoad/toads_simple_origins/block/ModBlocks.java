@@ -17,18 +17,18 @@ public class ModBlocks {
 
     //Register block qualities
     public static final Block EMPTY_FISH_BOWL_BLOCK = registerBlockWithoutBlockItem("empty_fish_bowl_block",
-            properties -> new EmptyFishBowlBlock(properties.noCollision()
-                    .ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GLASS)
+            properties -> new EmptyFishBowlBlock(properties
+                    .breakInstantly().sounds(BlockSoundGroup.GLASS)
                     .pistonBehavior(PistonBehavior.NORMAL)));
     public static final Block FILLED_FISH_BOWL_BLOCK = registerBlockWithoutBlockItem("filled_fish_bowl_block",
-            properties -> new FilledFishBowlBlock(properties.noCollision()
-                    .ticksRandomly().breakInstantly().sounds(BlockSoundGroup.GLASS)
+            properties -> new FilledFishBowlBlock(properties
+                    .breakInstantly().sounds(BlockSoundGroup.GLASS)
                     .pistonBehavior(PistonBehavior.NORMAL)));
 
     //Register blocks while preventing the creation of a block item
     private static Block registerBlockWithoutBlockItem(String name, Function<AbstractBlock.Settings, Block> function) {
         return Registry.register(Registries.BLOCK, Identifier.of(TSOMod.MOD_ID, name),
-                function.apply(AbstractBlock.Settings.create().nonOpaque()));
+                function.apply(AbstractBlock.Settings.create()));
     }
 
     //Log registries

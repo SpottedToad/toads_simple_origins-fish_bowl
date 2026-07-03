@@ -10,7 +10,7 @@ public class EmptyFishBowlRenderer extends AzArmorRenderer {
     //Define armor shape
     private static final Identifier MODEL = Identifier.of(
             TSOMod.MOD_ID,
-            "geo/empty_fish_bowl.geo.json"
+            "geo/armor/empty_fish_bowl.geo.json"
     );
 
     //Define armor texture
