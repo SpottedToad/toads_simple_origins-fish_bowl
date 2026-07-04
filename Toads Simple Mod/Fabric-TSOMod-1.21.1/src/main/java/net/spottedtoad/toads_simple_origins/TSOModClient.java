@@ -27,7 +27,6 @@ public class TSOModClient implements ClientModInitializer {
         BlockEntityRendererFactories.register(
                 ModBlockEntities.EMPTY_FISH_BOWL_BLOCK_ENTITY,
                 ctx -> new EmptyFishBowlBlockEntityRenderer());
-
         BlockEntityRendererFactories.register(
                 ModBlockEntities.FILLED_FISH_BOWL_BLOCK_ENTITY,
                 ctx -> new FilledFishBowlBlockEntityRenderer()

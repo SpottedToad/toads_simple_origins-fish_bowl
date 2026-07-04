@@ -140,4 +140,14 @@ public class FilledFishBowlBlock extends TranslucentBlock implements Waterloggab
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new FilledFishBowlBlockEntity(pos, state);
     }
+
+    //Implements method to play block entity animations
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, net.minecraft.util.math.random.Random random) {
+        if (state.get(Properties.WATERLOGGED)) {
+            if (world.getBlockEntity(pos) instanceof FilledFishBowlBlockEntity fishBowlBe) {
+                fishBowlBe.dispatcher.waterlog(fishBowlBe);
+            }
+        }
+    }
 }
