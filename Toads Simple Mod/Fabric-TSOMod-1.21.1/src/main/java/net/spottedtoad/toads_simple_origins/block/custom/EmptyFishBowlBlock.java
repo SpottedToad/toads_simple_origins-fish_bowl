@@ -9,6 +9,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -18,6 +19,7 @@ import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -136,6 +138,30 @@ public class EmptyFishBowlBlock extends TranslucentBlock implements Waterloggabl
     }
 
 
+    //Implement random ticks
+    @Override
+    public boolean hasRandomTicks(BlockState state) {
+        return true;
+    }
+
+    //Set chance to change block during rain when exposed to the sky
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (world.isRaining() && world.isSkyVisible(pos)) {
+            this.transformBlock(state, world, pos);
+        }
+    }
+
+    //Change block to filled fish bowl block
+    protected void transformBlock(BlockState state, ServerWorld world, BlockPos pos) {
+      if (world.getDimension().ultrawarm()) {
+            world.removeBlock(pos, false);
+            return;
+        }
+        BlockState newState = ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState();
+        world.setBlockState(pos, newState, Block.NOTIFY_ALL);
+    }
+
+    
     //Implements block entity
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {

@@ -19,7 +19,7 @@ public class ModBlocks {
     public static final Block EMPTY_FISH_BOWL_BLOCK = registerBlockWithoutBlockItem("empty_fish_bowl_block",
             properties -> new EmptyFishBowlBlock(properties
                     .breakInstantly().sounds(BlockSoundGroup.GLASS)
-                    .pistonBehavior(PistonBehavior.NORMAL)));
+                    .ticksRandomly().pistonBehavior(PistonBehavior.NORMAL)));
     public static final Block FILLED_FISH_BOWL_BLOCK = registerBlockWithoutBlockItem("filled_fish_bowl_block",
             properties -> new FilledFishBowlBlock(properties
                     .breakInstantly().sounds(BlockSoundGroup.GLASS)

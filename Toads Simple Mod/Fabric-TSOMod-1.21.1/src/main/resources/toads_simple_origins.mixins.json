@@ -3,7 +3,7 @@
 	"package": "net.spottedtoad.toads_simple_origins.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"ArmorItemTickMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
