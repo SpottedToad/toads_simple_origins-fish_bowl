@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.FluidTags;
 import net.spottedtoad.toads_simple_origins.item.custom.FilledFishBowlArmorItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,7 +23,7 @@ public abstract class ArmorItemTickMixin {
 
     //Set max oxygen; 6000 ticks = 300 seconds = 5 minutes
     @Unique
-    private static final int MAX_OXYGEN = 1200;
+    private static final int MAX_OXYGEN = 6000;
 
     //Add tick event
     @Inject(method = "tick", at = @At("HEAD"))
@@ -43,7 +44,7 @@ public abstract class ArmorItemTickMixin {
             }
             int currentOxygen = nbt.getInt("oxygenLevel");
             //Check for rain or water
-            if (player.isTouchingWater() || (player.getWorld().isRaining() && player.getWorld().isSkyVisible(player.getBlockPos()))) {
+            if (player.isSubmergedIn(FluidTags.WATER) || (player.getWorld().isRaining() && player.getWorld().isSkyVisible(player.getBlockPos()))) {
                 currentOxygen = MAX_OXYGEN;
             }
             //Tick when exposed to air
