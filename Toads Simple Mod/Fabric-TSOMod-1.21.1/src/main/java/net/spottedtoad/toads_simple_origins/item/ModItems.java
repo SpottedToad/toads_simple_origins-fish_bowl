@@ -25,10 +25,10 @@ public class ModItems {
     //Register armor item qualities
     public static final Item EMPTY_FISH_BOWL = registerItem("empty_fish_bowl",
             new EmptyFishBowlArmorItem(ModArmorMaterials.GLASS_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Settings()
-                    .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(1))));
+                    .maxDamage(5)));
     public static final Item FILLED_FISH_BOWL = registerItem("filled_fish_bowl",
             new FilledFishBowlArmorItem(ModArmorMaterials.GLASS_ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Settings()
-                    .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(1))));
+                    .maxDamage(5)));
 
     //Register items
     private static Item registerItem(String name, Item item){

@@ -61,7 +61,8 @@ public class TSOModClient implements ClientModInitializer {
             //Read oxygen nbt data and convert to percentage
             NbtComponent nbtComponent = helmet.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
             NbtCompound nbt = nbtComponent.copyNbt();
-            int maxOxygen = 1200;
+            //Set max oxygen to match tick mixin
+            int maxOxygen = 6000;
             int oxygen = nbt.contains("oxygenLevel") ? nbt.getInt("oxygenLevel") : maxOxygen;
 
             //Set pixel size of meter drain with 16x16 texture space

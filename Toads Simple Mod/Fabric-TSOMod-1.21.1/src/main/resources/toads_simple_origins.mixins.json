@@ -1,14 +1,15 @@
 {
-	"required": true,
-	"package": "net.spottedtoad.toads_simple_origins.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ArmorItemTickMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
+  "required": true,
+  "package": "net.spottedtoad.toads_simple_origins.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "FilledArmorItemTickMixin",
+    "EmptyArmorItemTickMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
 	}
 }

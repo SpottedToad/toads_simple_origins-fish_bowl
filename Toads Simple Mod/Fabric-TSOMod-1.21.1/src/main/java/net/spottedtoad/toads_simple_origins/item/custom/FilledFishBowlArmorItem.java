@@ -1,26 +1,19 @@
 package net.spottedtoad.toads_simple_origins.item.custom;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -28,6 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.spottedtoad.toads_simple_origins.block.ModBlocks;
+import net.spottedtoad.toads_simple_origins.block.entity.EmptyFishBowlBlockEntity;
+import net.spottedtoad.toads_simple_origins.block.entity.FilledFishBowlBlockEntity;
 
 public class FilledFishBowlArmorItem extends ArmorItem {
     public FilledFishBowlArmorItem(RegistryEntry<ArmorMaterial> material, Type type, Settings settings) {
@@ -48,10 +43,25 @@ public class FilledFishBowlArmorItem extends ArmorItem {
                 BlockPos placePos = targetPos.offset(side);
                 //Define action on server as placing filled fish bowl block
                 if (!world.isClient()) {
-                 BlockState blockToPlace = ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState();
-                    //Perform action on server when position matches conditions to be placeable
+                    boolean isTargetWater = world.getFluidState(placePos).getFluid() == Fluids.WATER;
+                    //Place filled if not in water, otherwise waterlogged
+                    BlockState blockToPlace;
+                    if (isTargetWater) {
+                        blockToPlace = ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState().with(Properties.WATERLOGGED, true);
+                    } else {
+                        blockToPlace = ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState();
+                    }
                     if (world.getBlockState(placePos).canReplace(new ItemPlacementContext(user, hand, itemStack, hitResult))) {
                         world.setBlockState(placePos, blockToPlace);
+                        //Get durability data
+                        int currentDamage = itemStack.getDamage();
+                        //Apply durability data
+                        BlockEntity placedEntity = world.getBlockEntity(placePos);
+                        if (placedEntity instanceof FilledFishBowlBlockEntity filledEntity) {
+                            filledEntity.setSavedDamage(currentDamage);
+                        } else if (placedEntity instanceof FilledFishBowlBlockEntity filledEntity) {
+                            filledEntity.setSavedDamage(currentDamage);
+                        }
                         //Remove one item if not in creative
                         if (!user.getAbilities().creativeMode) {
                             itemStack.decrement(1);

@@ -2,13 +2,18 @@ package net.spottedtoad.toads_simple_origins.block.custom;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.render.RenderLayer;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -26,6 +31,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.spottedtoad.toads_simple_origins.block.ModBlocks;
 import net.spottedtoad.toads_simple_origins.block.entity.EmptyFishBowlBlockEntity;
+import net.spottedtoad.toads_simple_origins.block.entity.FilledFishBowlBlockEntity;
+import net.spottedtoad.toads_simple_origins.item.ModItems;
+
+import java.util.List;
 
 public class EmptyFishBowlBlock extends TranslucentBlock implements Waterloggable, BlockEntityProvider {
     public EmptyFishBowlBlock(Settings settings) {
@@ -80,32 +89,28 @@ public class EmptyFishBowlBlock extends TranslucentBlock implements Waterloggabl
         return super.getFluidState(state);
     }
 
-    //Set state to waterlogged when placed in water
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-        boolean isWater = fluidState.getFluid() == Fluids.WATER;
-        return this.getDefaultState().with(Properties.WATERLOGGED, isWater);
-    }
-
-    //Set state to waterlogged when updates occur around the block
-    @Override
+    //Set block to waterlogged filled fish bowl block when in the waterlogged state
     protected BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        //Waterlogging ticks
         if (state.get(Properties.WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
-        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
-    }
-
-    //Set block to waterlogged filled fish bowl block when in the waterlogged state
-    protected void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-        if (state.get(Properties.WATERLOGGED)) {
-            if (!world.isClient()) {
-                world.setBlockState(pos, ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState()
-                        .with(Properties.WATERLOGGED, true), Block.NOTIFY_ALL);
+        //Get durability data
+        if (!world.isClient() && world.getFluidState(pos).isIn(FluidTags.WATER)) {
+            int currentDamage = 0;
+            if (world.getBlockEntity(pos) instanceof EmptyFishBowlBlockEntity emptyEntity) {
+                currentDamage = emptyEntity.getSavedDamage();
             }
+            if (world instanceof World realWorld) {
+                realWorld.setBlockState(pos, ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState()
+                        .with(Properties.WATERLOGGED, true), 3);
+                if (realWorld.getBlockEntity(pos) instanceof FilledFishBowlBlockEntity filledEntity) {
+                    filledEntity.setSavedDamage(currentDamage);
+                }
+            }
+            return ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState().with(Properties.WATERLOGGED, true);
         }
-        super.onBlockAdded(state, world, pos, oldState, notify);
+        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
 
@@ -116,9 +121,19 @@ public class EmptyFishBowlBlock extends TranslucentBlock implements Waterloggabl
         if (stack.isOf(Items.WATER_BUCKET)) {
             //Define action on server as play sound, swap block with filled fish bowl block, and waterlog if block was waterlogged
             if (!world.isClient()) {
+                //Get durability data
+                int currentDamage = 0;
+                if (world.getBlockEntity(pos) instanceof EmptyFishBowlBlockEntity emptyEntity) {
+                    currentDamage = emptyEntity.getSavedDamage();
+                }
                 world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                //Change block state
                 world.setBlockState(pos, ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState()
                         .with(Properties.WATERLOGGED, false), 3);
+                //Apply durability data
+                if (world.getBlockEntity(pos) instanceof FilledFishBowlBlockEntity filledEntity) {
+                    filledEntity.setSavedDamage(currentDamage);
+                }
                 //Remove one item when not in creative, then place water bucket into their hand or dropped onto the ground with full inventory
                 if (!player.getAbilities().creativeMode) {
                     stack.decrement(1);
@@ -153,14 +168,36 @@ public class EmptyFishBowlBlock extends TranslucentBlock implements Waterloggabl
 
     //Change block to filled fish bowl block
     protected void transformBlock(BlockState state, ServerWorld world, BlockPos pos) {
-      if (world.getDimension().ultrawarm()) {
-            world.removeBlock(pos, false);
-            return;
+        //Get durability data
+        int currentDamage = 0;
+        if (world.getBlockEntity(pos) instanceof EmptyFishBowlBlockEntity emptyEntity) {
+            currentDamage = emptyEntity.getSavedDamage();
         }
-        BlockState newState = ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState();
-        world.setBlockState(pos, newState, Block.NOTIFY_ALL);
+        //Change block
+        world.setBlockState(pos, ModBlocks.FILLED_FISH_BOWL_BLOCK.getDefaultState(), 3);
+        //Apply durability data
+        if (world.getBlockEntity(pos) instanceof FilledFishBowlBlockEntity filledEntity) {
+            filledEntity.setSavedDamage(currentDamage);
+        }
     }
 
+
+    //Apply durability data to dropped item
+    @Override
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (!world.isClient() && !player.getAbilities().creativeMode) {
+            //Get durability data
+            int currentDamage = 0;
+            if (world.getBlockEntity(pos) instanceof EmptyFishBowlBlockEntity emptyEntity) {
+                currentDamage = emptyEntity.getSavedDamage();
+            }
+            //Drop item with durability data
+            ItemStack droppedStack = new ItemStack(ModItems.EMPTY_FISH_BOWL);
+            droppedStack.set(DataComponentTypes.DAMAGE, currentDamage);
+            Block.dropStack(world, pos, droppedStack);
+        }
+        return super.onBreak(world, pos, state, player);
+    }
     
     //Implements block entity
     @Override

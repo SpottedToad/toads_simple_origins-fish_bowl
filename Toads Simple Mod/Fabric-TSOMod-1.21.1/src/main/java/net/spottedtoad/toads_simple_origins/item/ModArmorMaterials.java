@@ -26,7 +26,7 @@ public class ModArmorMaterials {
                 map.put(ArmorItem.Type.CHESTPLATE, 2);
                 map.put(ArmorItem.Type.HELMET, 1);
                 map.put(ArmorItem.Type.BODY, 3);
-            }), 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, () -> Ingredient.ofItems(Items.GLASS),
+            }), 0, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, () -> Ingredient.ofItems(Items.GLASS),
                     List.of(new ArmorMaterial.Layer(Identifier.of(TSOMod.MOD_ID, "glass"))), 0, 0));
 
     //Define values for unused reinforced glass armor material
@@ -37,7 +37,7 @@ public class ModArmorMaterials {
                 map.put(ArmorItem.Type.CHESTPLATE, 5);
                 map.put(ArmorItem.Type.HELMET, 3);
                 map.put(ArmorItem.Type.BODY, 6);
-            }), 18, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, () -> Ingredient.ofItems(Items.GLASS),
+            }), 0, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, () -> Ingredient.ofItems(Items.GLASS),
                     List.of(new ArmorMaterial.Layer(Identifier.of(TSOMod.MOD_ID, "reinforced_glass"))), 0, 0));
 
 

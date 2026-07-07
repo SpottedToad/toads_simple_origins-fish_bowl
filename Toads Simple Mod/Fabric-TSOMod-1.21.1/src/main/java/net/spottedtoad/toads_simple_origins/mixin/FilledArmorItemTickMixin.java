@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class ArmorItemTickMixin {
+public abstract class FilledArmorItemTickMixin {
     @Shadow
     public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 
@@ -40,9 +40,9 @@ public abstract class ArmorItemTickMixin {
             NbtCompound nbt = nbtComponent.copyNbt();
             //Initialize nbt data
             if (!nbt.contains("oxygenLevel")) {
-                nbt.putInt("oxygenLevel", 1200);
+                nbt.putInt("oxygenLevel", 6000);
             }
-            int currentOxygen = nbt.getInt("oxygenLevel");
+            int currentOxygen = nbt.contains("oxygenLevel") ? nbt.getInt("oxygenLevel") : MAX_OXYGEN;
             //Check for rain or water
             if (player.isSubmergedIn(FluidTags.WATER) || (player.getWorld().isRaining() && player.getWorld().isSkyVisible(player.getBlockPos()))) {
                 currentOxygen = MAX_OXYGEN;

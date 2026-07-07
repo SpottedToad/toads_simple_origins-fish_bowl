@@ -10,6 +10,11 @@ public class FilledFishBowlBlockEntityAnimationDispatcher {
             "waterlog",
             AzPlayBehaviors.LOOP
     );
+    private static final AzCommand UNWATERLOG_COMMAND = AzCommand.create(
+            "waterlog_controller",
+            "idle",
+            AzPlayBehaviors.LOOP
+    );
 
     private final BlockEntity blockEntity;
 
@@ -19,5 +24,8 @@ public class FilledFishBowlBlockEntityAnimationDispatcher {
 
     public void waterlog(BlockEntity BlockEntity) {
         WATERLOG_COMMAND.sendForBlockEntity(BlockEntity);
+    }
+    public void unwaterlog(BlockEntity blockEntity) {
+        UNWATERLOG_COMMAND.sendForBlockEntity(blockEntity);
     }
 }
