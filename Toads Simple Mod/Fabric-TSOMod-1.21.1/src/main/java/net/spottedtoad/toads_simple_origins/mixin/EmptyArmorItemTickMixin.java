@@ -42,10 +42,14 @@ public abstract class EmptyArmorItemTickMixin {
             //Define filled fish bowl item
             Item filledBowlItem = Registries.ITEM.get(Identifier.of("toads_simple_origins", "filled_fish_bowl"));
             if (filledBowlItem == null) return;
-            //Switch to filled bowl when submerged in water while transfering data
+            //Switch to filled bowl when submerged in water while transferring data
             if (player.isSubmergedIn(FluidTags.WATER)) {
+                int currentDamage = headStack.getDamage();
                 ItemStack filledHelmet = new ItemStack(filledBowlItem);
-                filledHelmet.set(DataComponentTypes.CUSTOM_DATA, headStack.get(DataComponentTypes.CUSTOM_DATA));
+                filledHelmet.set(DataComponentTypes.DAMAGE, currentDamage);
+                NbtCompound customData = new NbtCompound();
+                customData.putInt("oxygenLevel", 6000);
+                filledHelmet.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(customData));
                 player.equipStack(EquipmentSlot.HEAD, filledHelmet);
             }
             //Begin ticking towards water threshold
@@ -57,8 +61,12 @@ public abstract class EmptyArmorItemTickMixin {
                     int rainProgress = nbt.contains("rainTicks") ? nbt.getInt("rainTicks") : 0;
                     rainProgress++;
                     if (rainProgress >= RAIN_FILL_THRESHOLD) {
+                        int currentDamage = headStack.getDamage();
                         ItemStack filledHelmet = new ItemStack(filledBowlItem);
-                        filledHelmet.set(DataComponentTypes.CUSTOM_DATA, headStack.get(DataComponentTypes.CUSTOM_DATA));
+                        filledHelmet.set(DataComponentTypes.DAMAGE, currentDamage);
+                        NbtCompound customData = new NbtCompound();
+                        customData.putInt("oxygenLevel", 6000);
+                        filledHelmet.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(customData));
                         player.equipStack(EquipmentSlot.HEAD, filledHelmet);
                     } else {
                         nbt.putInt("rainTicks", rainProgress);

@@ -21,8 +21,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.spottedtoad.toads_simple_origins.block.ModBlocks;
-import net.spottedtoad.toads_simple_origins.block.entity.EmptyFishBowlBlockEntity;
 import net.spottedtoad.toads_simple_origins.block.entity.FilledFishBowlBlockEntity;
+
+import static net.spottedtoad.toads_simple_origins.ModConfig.maxOxygen;
 
 public class FilledFishBowlArmorItem extends ArmorItem {
     public FilledFishBowlArmorItem(RegistryEntry<ArmorMaterial> material, Type type, Settings settings) {
@@ -53,14 +54,16 @@ public class FilledFishBowlArmorItem extends ArmorItem {
                     }
                     if (world.getBlockState(placePos).canReplace(new ItemPlacementContext(user, hand, itemStack, hitResult))) {
                         world.setBlockState(placePos, blockToPlace);
-                        //Get durability data
+                        //Get durability and oxygen data
                         int currentDamage = itemStack.getDamage();
-                        //Apply durability data
+                        NbtComponent nbtComponent = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
+                        NbtCompound itemNbt = nbtComponent.copyNbt();
+                        int currentOxygen = itemNbt.contains("oxygenLevel") ? itemNbt.getShort("oxygenLevel") : maxOxygen;
+                        //Apply durability and oxygen data
                         BlockEntity placedEntity = world.getBlockEntity(placePos);
                         if (placedEntity instanceof FilledFishBowlBlockEntity filledEntity) {
                             filledEntity.setSavedDamage(currentDamage);
-                        } else if (placedEntity instanceof FilledFishBowlBlockEntity filledEntity) {
-                            filledEntity.setSavedDamage(currentDamage);
+                            filledEntity.setOxygenLevel(currentOxygen);
                         }
                         //Remove one item if not in creative
                         if (!user.getAbilities().creativeMode) {

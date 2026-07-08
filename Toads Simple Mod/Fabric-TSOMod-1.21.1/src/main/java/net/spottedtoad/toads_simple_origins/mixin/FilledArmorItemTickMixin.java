@@ -16,14 +16,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static net.spottedtoad.toads_simple_origins.ModConfig.maxOxygen;
+
 @Mixin(LivingEntity.class)
 public abstract class FilledArmorItemTickMixin {
     @Shadow
     public abstract ItemStack getEquippedStack(EquipmentSlot slot);
-
-    //Set max oxygen; 6000 ticks = 300 seconds = 5 minutes
-    @Unique
-    private static final int MAX_OXYGEN = 6000;
 
     //Add tick event
     @Inject(method = "tick", at = @At("HEAD"))
@@ -40,22 +38,33 @@ public abstract class FilledArmorItemTickMixin {
             NbtCompound nbt = nbtComponent.copyNbt();
             //Initialize nbt data
             if (!nbt.contains("oxygenLevel")) {
-                nbt.putInt("oxygenLevel", 6000);
+                nbt.putInt("oxygenLevel", maxOxygen);
             }
-            int currentOxygen = nbt.contains("oxygenLevel") ? nbt.getInt("oxygenLevel") : MAX_OXYGEN;
-            //Check for rain or water
-            if (player.isSubmergedIn(FluidTags.WATER) || (player.getWorld().isRaining() && player.getWorld().isSkyVisible(player.getBlockPos()))) {
-                currentOxygen = MAX_OXYGEN;
+            int currentOxygen = nbt.contains("oxygenLevel") ? nbt.getInt("oxygenLevel") : maxOxygen;
+            //Ensure oxygen is reset to the maximum value when above that value (useful for setting maxOxygen to low values in config)
+            if (currentOxygen > maxOxygen) {
+                currentOxygen = maxOxygen;
             }
-            //Tick when exposed to air
-            else {
-                if (currentOxygen > 0) {
-                    currentOxygen--;
+
+            //Check player for gills, hid hud if no gills
+            boolean hasGills = player.getCommandTags().contains("has_gills");
+            nbt.putBoolean("showGillsHud", hasGills);
+            if (hasGills) {
+                //Check for rain or water
+                if (player.isSubmergedIn(FluidTags.WATER) || (player.getWorld().isRaining() && player.getWorld().isSkyVisible(player.getBlockPos()))) {
+                    currentOxygen = maxOxygen;
+                }
+                //Tick when exposed to air
+                else {
+                    if (currentOxygen > 0) {
+                        currentOxygen--;
+                    }
                 }
             }
             //Modify nbt data of item
             nbt.putInt("oxygenLevel", currentOxygen);
             headStack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbt));
+            player.getInventory().markDirty();
         }
     }
 }

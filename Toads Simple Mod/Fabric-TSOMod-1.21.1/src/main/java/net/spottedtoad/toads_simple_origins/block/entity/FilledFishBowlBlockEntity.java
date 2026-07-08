@@ -7,10 +7,9 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+
+import static net.spottedtoad.toads_simple_origins.ModConfig.maxOxygen;
 
 public class FilledFishBowlBlockEntity extends BlockEntity {
     public final FilledFishBowlBlockEntityAnimationDispatcher dispatcher;
@@ -29,7 +28,7 @@ public class FilledFishBowlBlockEntity extends BlockEntity {
 
 
     //Define max oxygen, be sure to match ArmorItemTickMixin
-    private int oxygenLevel = 6000;
+    private int oxygenLevel = maxOxygen;
     //Create damage tracking field
     private int savedDamage = 0;
 

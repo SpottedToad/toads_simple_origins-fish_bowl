@@ -2,21 +2,15 @@ package net.spottedtoad.toads_simple_origins;
 
 import mod.azure.azurelib.common.render.armor.AzArmorRendererRegistry;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.spottedtoad.toads_simple_origins.block.ModBlocks;
 import net.spottedtoad.toads_simple_origins.block.entity.EmptyFishBowlBlockEntityRenderer;
 import net.spottedtoad.toads_simple_origins.block.entity.FilledFishBowlBlockEntityRenderer;
 import net.spottedtoad.toads_simple_origins.block.entity.ModBlockEntities;
@@ -61,13 +55,15 @@ public class TSOModClient implements ClientModInitializer {
             //Read oxygen nbt data and convert to percentage
             NbtComponent nbtComponent = helmet.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
             NbtCompound nbt = nbtComponent.copyNbt();
-            //Set max oxygen to match tick mixin
-            int maxOxygen = 6000;
+            if (!nbt.contains("showGillsHud") || !nbt.getBoolean("showGillsHud")) {
+                return;
+            }
+            int maxOxygen = ModConfig.maxOxygen;
             int oxygen = nbt.contains("oxygenLevel") ? nbt.getInt("oxygenLevel") : maxOxygen;
 
             //Set pixel size of meter drain with 16x16 texture space
             float ratio = (float) oxygen / maxOxygen;
-            int pixelHeight = (int) (16 * ratio);
+            int pixelHeight = Math.min(16, (int) (16 * ratio));
 
             //Set hud element position with left and top edges
             int screenWidth = client.getWindow().getScaledWidth();
@@ -90,7 +86,7 @@ public class TSOModClient implements ClientModInitializer {
                 drawContext.drawTexture(
                         OXYGEN_TEXTURE,
                         drawX, drawY + missingHeight,
-                        16, (float) missingHeight,
+                        16, missingHeight,
                         16, pixelHeight,
                         32, 16
                 );
