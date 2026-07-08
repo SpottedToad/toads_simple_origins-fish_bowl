@@ -28,11 +28,29 @@
 	"mixins": [
 		"toads_simple_origins.mixins.json"
 	],
+	"custom": {
+		"modrinth": {
+			"dependencies": [
+				{
+					"id": "azurelib",
+					"relationship": "required",
+					"version": "1.21.1"
+				},
+				{
+					"id": "origins",
+					"relationship": "optional",
+					"version": "1.21.1"
+				}
+			]
+		}
+	},
 	"depends": {
 		"fabricloader": ">=0.19.3",
 		"minecraft": "~1.21.1",
-		"java": ">=21",
-		"fabric-api": "*",
+		"azurelib": ">=3.1.10",
+		"java": ">=21"
+	},
+	"recommends": {
 		"origins": ">=1.13.0-pre.2"
 	}
 }
