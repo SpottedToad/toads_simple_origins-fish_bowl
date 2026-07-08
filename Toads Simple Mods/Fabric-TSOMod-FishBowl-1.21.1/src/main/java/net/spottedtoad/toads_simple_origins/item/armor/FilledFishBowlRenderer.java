@@ -6,8 +6,6 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import net.spottedtoad.toads_simple_origins.TSOMod;
 
-import static java.awt.Transparency.TRANSLUCENT;
-
 public class FilledFishBowlRenderer extends AzArmorRenderer {
 
     //Define armor shape

@@ -3,16 +3,11 @@ package net.spottedtoad.toads_simple_origins.block.custom;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.loot.context.LootContextParameterSet;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -33,8 +28,6 @@ import net.spottedtoad.toads_simple_origins.block.ModBlocks;
 import net.spottedtoad.toads_simple_origins.block.entity.EmptyFishBowlBlockEntity;
 import net.spottedtoad.toads_simple_origins.block.entity.FilledFishBowlBlockEntity;
 import net.spottedtoad.toads_simple_origins.item.ModItems;
-
-import java.util.List;
 
 public class EmptyFishBowlBlock extends TranslucentBlock implements Waterloggable, BlockEntityProvider {
     public EmptyFishBowlBlock(Settings settings) {
