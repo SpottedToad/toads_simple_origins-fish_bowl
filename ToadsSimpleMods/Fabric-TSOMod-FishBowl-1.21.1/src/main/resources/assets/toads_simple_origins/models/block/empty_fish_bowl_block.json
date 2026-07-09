@@ -1,9 +1,0 @@
-{
-	"textures": {
-		"particle": "toads_simple_origins:block/empty_fish_bowl_block"
-	},
-	"variants": {
-		"waterlogged=false": { "model": "builtin/entity" },
-		"waterlogged=true": { "model": "builtin/entity" }
-	}
-}

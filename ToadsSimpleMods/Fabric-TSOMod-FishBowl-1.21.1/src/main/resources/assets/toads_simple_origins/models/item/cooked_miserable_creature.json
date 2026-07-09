@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "toads_simple_origins:item/cooked_miserable_creature"
-  }
-}
