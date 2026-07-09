@@ -45,7 +45,7 @@ public abstract class FilledArmorItemTickMixin {
                 currentOxygen = maxOxygen;
             }
 
-            //Check player for gills, hid hud if no gills
+            //Check player for gills, hide hud if no gills
             boolean hasGills = player.getCommandTags().contains("has_gills");
             nbt.putBoolean("showGillsHud", hasGills);
             if (hasGills) {

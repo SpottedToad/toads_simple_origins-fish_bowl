@@ -38,7 +38,7 @@
 				},
 				{
 					"id": "origins",
-					"relationship": "optional",
+					"relationship": "required",
 					"version": "1.21.1"
 				}
 			]
@@ -48,9 +48,11 @@
 		"fabricloader": ">=0.19.3",
 		"minecraft": "~1.21.1",
 		"azurelib": ">=3.1.10",
-		"java": ">=21"
-	},
-	"recommends": {
+		"java": ">=21",
 		"origins": ">=1.13.0-pre.2"
-	}
+	},
+	"after": [
+		"origins",
+		"apoli"
+	]
 }

@@ -58,7 +58,7 @@ public class FilledFishBowlArmorItem extends ArmorItem {
                         int currentDamage = itemStack.getDamage();
                         NbtComponent nbtComponent = itemStack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
                         NbtCompound itemNbt = nbtComponent.copyNbt();
-                        int currentOxygen = itemNbt.contains("oxygenLevel") ? itemNbt.getShort("oxygenLevel") : maxOxygen;
+                        int currentOxygen = itemNbt.contains("oxygenLevel") ? itemNbt.getInt("oxygenLevel") : maxOxygen;
                         //Apply durability and oxygen data
                         BlockEntity placedEntity = world.getBlockEntity(placePos);
                         if (placedEntity instanceof FilledFishBowlBlockEntity filledEntity) {
