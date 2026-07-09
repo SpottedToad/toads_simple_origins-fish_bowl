@@ -1,9 +1,12 @@
 package net.spottedtoad.toads_simple_origins;
 
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.fabricmc.api.ModInitializer;
 import net.spottedtoad.toads_simple_origins.block.ModBlocks;

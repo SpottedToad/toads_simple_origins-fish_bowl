@@ -1,0 +1,21 @@
+{
+  "hidden": true,
+  "type": "origins:damage_over_time",
+  "interval": 20,
+  "onset_delay": 1,
+  "damage": 2,
+  "damage_easy": 1,
+  "damage_type": "origins:hurt_by_water",
+  "protection_enchantment": "origins:water_protection",
+  "protection_effectiveness": 1.0,
+  "condition": {
+    "type": "origins:equipped_item",
+    "equipment_slot": "head",
+    "item_condition": {
+      "type": "origins:ingredient",
+      "ingredient": {
+        "item": "toads_simple_origins:filled_fish_bowl"
+      }
+    }
+  }
+}
