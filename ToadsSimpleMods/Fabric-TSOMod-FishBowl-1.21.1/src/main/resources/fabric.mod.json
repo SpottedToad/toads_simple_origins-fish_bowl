@@ -1,0 +1,58 @@
+{
+	"schemaVersion": 1,
+	"id": "toads_simple_origins-fish_bowl",
+	"version": "${version}",
+	"name": "toads_simple_origins-fish_bowl",
+	"description": "A mod that adds the Toad's Simple Origins fishbowl armor.",
+	"authors": [
+		"SpottedToad"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/SpottedToad/Toads-Simple-Origins"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/toads_simple_origins/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.spottedtoad.toads_simple_origins.TSOMod"
+		],
+		"fabric-datagen": [
+			"net.spottedtoad.toads_simple_origins.TSOModDataGenerator"
+		],
+		"client": [
+			"net.spottedtoad.toads_simple_origins.TSOModClient"
+		]
+	},
+	"mixins": [
+		"toads_simple_origins.mixins.json"
+	],
+	"custom": {
+		"modrinth": {
+			"dependencies": [
+				{
+					"id": "azurelib",
+					"relationship": "required",
+					"version": "1.21.1"
+				},
+				{
+					"id": "origins",
+					"relationship": "required",
+					"version": "1.21.1"
+				}
+			]
+		}
+	},
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.1",
+		"azurelib": ">=3.1.10",
+		"java": ">=21",
+		"origins": ">=1.13.0-pre.2"
+	},
+	"after": [
+		"origins",
+		"apoli"
+	]
+}

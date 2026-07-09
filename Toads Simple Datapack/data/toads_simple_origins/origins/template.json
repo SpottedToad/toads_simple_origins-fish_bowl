@@ -1,0 +1,15 @@
+{
+	"name": "Template",
+	"description": "does not do anything.",
+	"order": 10,
+	"impact": 0,
+
+	"powers": [
+
+		],
+	
+	"icon": {
+		"id": "minecraft:grass_block",
+		"components": {"custom_model_data":1000000}
+		}
+}

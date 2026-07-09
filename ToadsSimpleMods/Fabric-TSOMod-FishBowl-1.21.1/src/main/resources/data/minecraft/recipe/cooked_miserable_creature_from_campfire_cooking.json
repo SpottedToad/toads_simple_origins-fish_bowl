@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 600,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "toads_simple_origins:miserable_creature"
+  },
+  "result": {
+    "id": "toads_simple_origins:cooked_miserable_creature"
+  }
+}
