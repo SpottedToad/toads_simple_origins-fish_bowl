@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "toads_simple_origins",
+	"id": "toads_simple_origins-fish_bowl",
 	"version": "${version}",
-	"name": "toads_simple_origins",
-	"description": "A mod that adds features for Toad's Simple Origins server.",
+	"name": "toads_simple_origins-fish_bowl",
+	"description": "A mod that adds the Toad's Simple Origins fishbowl armor.",
 	"authors": [
 		"SpottedToad"
 	],
