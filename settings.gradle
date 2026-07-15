@@ -10,4 +10,4 @@ pluginManagement {
 }
 
 // Should match your modid
-rootProject.name = 'toads_simple_origins'
+rootProject.name = 'toads_simple_origins-fish_bowl'
