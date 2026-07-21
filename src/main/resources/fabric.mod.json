@@ -8,10 +8,11 @@
 		"SpottedToad"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/SpottedToad/toads_simple_origins-fish_bowl"
+		"homepage": "https://modrinth.com/mod/toads_simple_origins-fish_bowl",
+		"sources": "https://github.com/SpottedToad/toads_simple_origins-fish_bowl",
+		"issues": "https://github.com/SpottedToad/toads_simple_origins-fish_bowl/issues"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/toads_simple_origins/icon.png",
 	"environment": "*",
 	"entrypoints": {
